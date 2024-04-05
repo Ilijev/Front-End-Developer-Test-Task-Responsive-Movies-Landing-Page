@@ -37,8 +37,8 @@ $(function () {
 
         // const  movieGenres = genres.map(genre. )
         // console.log( genres.find(28))
-       
-            console.log( genreIds.map(genreId => genres.find(genre=>genre === genreId)));
+        const  movieGenres=genreIds.map(genreId => genres.find(genre=>genre.id === genreId).name || 'unknown').join(',')
+            console.log( genreIds.map(genreId => genres.find(genre=>genre.id === genreId)));
         
       const movieCard = `
               <div class="col">
@@ -46,7 +46,7 @@ $(function () {
                   <img src="${posterPath}" class="card-img-top" alt="Movie Poster">
                   <div class="card-body">
                     <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${year} | genreNames</p>
+                    <p class="card-text">${year} | ${movieGenres}</p>
                     <p class="card-text">${description}</p>
                   </div>
                 </div>
