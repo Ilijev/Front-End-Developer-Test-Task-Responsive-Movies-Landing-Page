@@ -20,9 +20,15 @@ $(function () {
     const quoteUrl = `https://quoteapi.pythonanywhere.com/random`; 
     const response = await fetch(quoteUrl);
     const data = await response.json();
-    console.log(data)
-    return data;
+    console.log(data.Quotes[0].quote)
+    $ ("#randomQuote").append(` <div class="py-2 text-center fw-bold">${data.Quotes[0].quote}</div>`)
+    
+    setTimeout(function () {
+      $("#randomQuote").remove();
+    }, 1500)
   }
+
+
   function filterBySearchTerm() {
     const searchTerm = $("#searchInput").val();
     filters.searchTerm = searchTerm;
