@@ -79,14 +79,25 @@
         <div class="row" >
             <div class="col d-flex justify-content-center" id="genreBtns"></div>    
         
-
-      <div
-        class="modal fade"
-        id="movieDetailsModal"
-        tabindex="-1"
-        aria-hidden="true"
-      ></div>
+            <!-- movie details modal -->
+            <div class="modal fade" id="movieModal" tabindex="-1" aria-labelledby="movieModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="movieModalLabel">Movie Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h2 id="movieTitle"></h2>
+                      <p id="movieYear"></p>
+                      <p id="movieDescription"></p>
+                      <p id="movieGenres"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
     </div>
+    <div class="row" id="randomQuote"></div>
     <main>
       <div class="album py-5 bg-light">
         <div class="container">
