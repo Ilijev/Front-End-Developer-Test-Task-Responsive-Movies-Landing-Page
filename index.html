@@ -158,6 +158,23 @@
           </div>
         </div>
       </div>
+      <div class="container">
+        <form id="addMovieForm">
+          <div class="mb-3">
+            <label for="movieTitle" class="form-label">Movie Title</label>
+            <input type="text" class="form-control" id="movieTitle" maxlength="250" required>
+          </div>
+          <div class="mb-3">
+            <label for="movieDate" class="form-label">Release Date</label>
+            <input type="date" class="form-control" id="movieDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="movieDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="movieDescription" maxlength="500" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Movie</button>
+        </form>
+      </div>
     </main>
 
     <script
@@ -165,6 +182,10 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
   
 
     <script src="./app.js"></script>

@@ -1,5 +1,6 @@
 $(function () {
   const apiKey = "d96644d18099073635702aec47127ce2";
+  let movieArray = [];
   //filter object to be able to search by each one
   let filters = {
     genreId: "", // genre filtering
@@ -16,6 +17,7 @@ $(function () {
     // Refetch movies with the updated filter:
     movieCard();
   });
+  //random quote
   async function randomQuote(){
     const quoteUrl = `https://quoteapi.pythonanywhere.com/random`; 
     const response = await fetch(quoteUrl);
@@ -28,6 +30,29 @@ $(function () {
     }, 1500)
   }
 
+  // form validations this was from Gemini 's code, I just added a few things
+  
+  $("#addMovieForm").validate({
+    // ... validation rules and messages
+    submitHandler: function (form) {
+      event.preventDefault(); // Prevent default form submission
+
+      const title = $("#movieTitle").val();
+      const date = $("#movieDate").val();
+      const description = $("#movieDescription").val();
+
+      const newMovie = {
+        title: title,
+        date: date,
+        description: description
+      };
+
+      movieArray.push(newMovie);
+      movieCard(newMovie); // Call movieCard after adding movie
+
+      $(form).trigger("reset"); // Optionally clear form fields
+    }
+  });
 
   function filterBySearchTerm() {
     const searchTerm = $("#searchInput").val();
@@ -58,23 +83,28 @@ $(function () {
       queryParams += `&with_genres=${filters.genreId}`; // Single genre ID for filtering
     }
 
-    // if (filters.searchTerm) {
-    //   queryParams += `&query=${filters.searchTerm}`; // Optional search term
-    // }
+   
     if (filters.searchTerm !== "") { 
-        // queryParams += `&query=${filters.searchTerm}`;
         queryParams += `&query=${encodeURIComponent(filters.searchTerm)}`
       }
 
     const response = await fetch(`${url}${queryParams}`);
-    const data = await response.json(); // Parse the JSON response
-    return data.results; // Return only the movies array
+    const data = await response.json(); 
+    return data.results; 
   }
 
-  async function movieCard() {
+  async function movieCard(newMovie = null) {
     let genres = await getGenres();
-    let movies = await fetchMovies(filters);
-    console.log(movies)
+    
+    let movies;
+  if (newMovie) {
+      movies = await fetchMovies(filters);
+    movies.push(newMovie);
+  } else {
+    movies = await fetchMovies(filters);
+  }
+
+    console.log(movieArray)
     //create btns for filtering through genres
     const genreBtns = $("#genreBtns");
     genreBtns.empty();
@@ -88,7 +118,6 @@ $(function () {
     });
     const moviesContainer = $("#movies");
     moviesContainer.empty();
-    // console.log(moviesContainer);
 
     movies.forEach(async (movie) => {
       const title = movie.title;
@@ -97,17 +126,14 @@ $(function () {
       const description = movie.overview.slice(0, 100) + "..."; // description
       const genreIds = movie.genre_ids;
 
-      // const  movieGenres = genres.map(genre. )
-      // console.log( genres.find(28))
+      
       const movieGenres = genreIds
         .map(
           (genreId) =>
             genres.find((genre) => genre.id === genreId).name || "unknown"
         )
         .join(",");
-      //   console.log(
-      //     genreIds.map((genreId) => genres.find((genre) => genre.id === genreId))
-      //   );
+     
 
       const movieCard = `
   <div class="col">
